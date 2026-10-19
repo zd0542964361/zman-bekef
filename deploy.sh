@@ -1,6 +1,8 @@
 #!/bin/sh
 # מעלה את הגרסה העדכנית של האפליקציה לאתר (GitHub Pages מענף gh-pages)
 cd "$(dirname "$0")" || exit 1
+# גרסה חדשה בכל פרסום — כדי שהטלפונים יקבלו את העדכון (וההודעה ✨)
+sed -i '' "s/^const CACHE = .*/const CACHE = 'zman-$(date +%Y%m%d%H%M%S)';/" app/sw.js
 git add -A && git commit -q -m "עדכון האפליקציה" 2>/dev/null
 git push -q origin main
 git subtree split --prefix app -b gh-pages-tmp >/dev/null
