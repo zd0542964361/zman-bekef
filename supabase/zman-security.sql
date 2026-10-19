@@ -11,10 +11,10 @@ $$;
 revoke all on function zman_group_codes() from public, anon;
 grant execute on function zman_group_codes() to authenticated;
 
--- 2. קודים ארוכים יותר (8 תווים, בלי 0/O/1/I שמתבלבלים)
+-- 2. קודים ארוכים יותר (8 תווים, בלי 0/O/1/I/L שמתבלבלים)
 create or replace function zman_new_code() returns text
 language plpgsql volatile set search_path = public as $$
-declare c text; abc text := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; i int;
+declare c text; abc text := 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; i int;
 begin
   loop
     c := '';
@@ -24,7 +24,7 @@ begin
   return c;
 end $$;
 
--- 3. הגבלת ניסיונות: עד 10 קודים שגויים ב-15 דקות
+-- 3. הגבלת ניסיונות: עד 10 קודים שגויים בשעה
 create table if not exists zman_join_attempts (user_id uuid not null, at timestamptz not null default now());
 create index if not exists zman_join_attempts_u on zman_join_attempts (user_id, at);
 alter table zman_join_attempts enable row level security; -- אין גישה ישירה, רק דרך הפונקציה
@@ -34,7 +34,7 @@ returns uuid language plpgsql security definer set search_path = public as $$
 declare g uuid; r text := 'member'; c text := upper(regexp_replace(coalesce(jcode, ''), '\s', '', 'g'));
 begin
   if auth.uid() is null then raise exception 'not signed in'; end if;
-  if (select count(*) from zman_join_attempts where user_id = auth.uid() and at > now() - interval '15 minutes') >= 10 then raise exception 'too many tries'; end if;
+  if (select count(*) from zman_join_attempts where user_id = auth.uid() and at > now() - interval '1 hour') >= 10 then raise exception 'too many tries'; end if;
   select id into g from zman_groups where code = c;
   if g is null then select id into g from zman_groups where child_code = c; r := 'child'; end if;
   if g is null then
