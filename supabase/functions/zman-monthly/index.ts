@@ -53,7 +53,7 @@ Deno.serve(async req => {
     const to_ = u?.user?.email; if (!to_) continue;
     const { data: rows } = await sb.from('zman_tasks').select('data,assignee,created_by').eq('deleted', false)
       .or(`created_by.eq.${p.user_id},assignee.eq.${p.user_id}`).limit(5000);
-    const items = (rows ?? []).map(r => r.data).filter((d: any) => d && !['msg', 'reply', 'shop'].includes(d.kind));
+    const items = (rows ?? []).map(r => r.data).filter((d: any) => d && !['msg', 'reply', 'shop', 'habit', 'star', 'prize'].includes(d.kind));
     const inM = (t?: string) => !!t && new Date(t) >= from && new Date(t) < to;
     const done = items.filter((d: any) => inM(d.doneAt) || (d.repeat && inM(d.lastDone)));
     const open = items.filter((d: any) => d.status === 'open' && d.kind !== 'thought' && (!d.due || new Date(d.due) < to));
