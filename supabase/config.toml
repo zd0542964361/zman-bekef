@@ -2,3 +2,6 @@ project_id = "zman-bekef"
 
 [functions.zman-push]
 verify_jwt = false
+
+[functions.zman-monthly]
+verify_jwt = false
