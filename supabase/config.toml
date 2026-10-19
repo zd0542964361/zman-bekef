@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.zman-monthly]
 verify_jwt = false
+
+[functions.zman-gcal]
+verify_jwt = false
