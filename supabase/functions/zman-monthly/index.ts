@@ -6,7 +6,7 @@ import nodemailer from 'npm:nodemailer@6.9.14';
 const env = (...k: string[]) => k.map(x => Deno.env.get(x)).find(Boolean) || '';
 const sb = createClient(env('SUPABASE_URL'), env('SUPABASE_SERVICE_ROLE_KEY'), { auth: { persistSession: false } });
 const GMAIL_USER = env('ZMAN_GMAIL_USER', 'GMAIL_USER'), GMAIL_PASS = env('ZMAN_GMAIL_APP_PASSWORD', 'GMAIL_APP_PASSWORD');
-const APP_URL = env('ZMAN_APP_URL') || 'https://zd0542964361.github.io/zman-bekef/';
+const APP_URL = env('ZMAN_APP_URL') || 'https://zmanbekef.github.io/';
 const MONTHS = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
 const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
 

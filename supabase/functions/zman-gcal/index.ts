@@ -9,7 +9,7 @@ const env = (k: string) => Deno.env.get(k) || '';
 const sb = createClient(env('SUPABASE_URL'), env('SUPABASE_SERVICE_ROLE_KEY'), { auth: { persistSession: false } });
 const CID = env('ZMAN_GOOGLE_CLIENT_ID'), SECRET = env('ZMAN_GOOGLE_CLIENT_SECRET');
 const SELF = `${env('SUPABASE_URL')}/functions/v1/zman-gcal`;
-const APP = env('ZMAN_APP_URL') || 'https://zd0542964361.github.io/zman-bekef/';
+const APP = env('ZMAN_APP_URL') || 'https://zmanbekef.github.io/';
 const TZ = 'Asia/Jerusalem';
 const G = 'https://www.googleapis.com/calendar/v3';
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type' };
