@@ -23,3 +23,6 @@ create policy "zc update" on zman_categories for update using ((group_id is null
   with check ((group_id is null and owner = auth.uid()) or (group_id is not null and zman_in_group(group_id)));
 grant select, insert, update on zman_categories to authenticated;
 do $$ begin begin alter publication supabase_realtime add table zman_categories; exception when others then null; end; end $$;
+
+-- 20.10.2026: סדר הקטגוריות (גרירה למעלה/למטה) — גם לקטגוריות המוכנות
+alter table zman_categories add column if not exists ord integer;
