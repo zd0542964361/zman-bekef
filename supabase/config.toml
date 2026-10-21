@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.zman-gcal]
 verify_jwt = false
+
+[functions.zman-calendar]
+verify_jwt = false
